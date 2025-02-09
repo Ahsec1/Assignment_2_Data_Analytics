@@ -1,19 +1,24 @@
 import plotly.graph_objects as go
 import pandas as pd
 
+# Load the data from CSV file
 df = pd.read_csv("C:/Users/USER/Documents/3rd year 2nd sem/Data Analytics/Assignment_2_Data_Analytics/data/sankey_assignment.csv")
 
+# Define the labels for the Sankey diagram
 left_labels = df.columns[1:9]  
 right_labels = df.columns[9:]  
 middle_labels = df["LABEL"].tolist()
 
+# Combine all labels into a single list
 labels = list(left_labels) + middle_labels + list(right_labels)
 label_to_index = {label: i for i, label in enumerate(labels)}
 
+# Initialize lists for sources, targets, and values
 sources = []
 targets = []
 values = []
 
+# Populate the sources, targets, and values lists
 for _, row in df.iterrows():
     mid_label = row["LABEL"]
    
@@ -31,6 +36,7 @@ for _, row in df.iterrows():
             targets.append(label_to_index[right])
             values.append(flow_value)
 
+# Define colors for the nodes
 colors = {
     "OMP": "#20b2aa",
     "PS": "#ffa07a",
@@ -50,9 +56,11 @@ colors = {
     "Oth": "#90ee8f"
 }
 
+# Assign colors to nodes and make labels bold
 node_colors = [colors[label] for label in labels]
 bold_labels = [f"<b>{label}</b>" for label in labels]
 
+# Create the Sankey diagram
 fig = go.Figure(go.Sankey(
     node=dict(
         pad=20,
@@ -69,6 +77,7 @@ fig = go.Figure(go.Sankey(
     )
 ))
 
+# Update layout and display the diagram
 fig.update_layout(
     title_text="Sankey Diagram",
     font_size=18
