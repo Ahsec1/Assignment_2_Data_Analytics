@@ -51,13 +51,14 @@ colors = {
 }
 
 node_colors = [colors[label] for label in labels]
+bold_labels = [f"<b>{label}</b>" for label in labels]
 
 fig = go.Figure(go.Sankey(
     node=dict(
         pad=20,
         thickness=20,
         line=dict(color="black", width=0.5),
-        label=labels,
+        label=bold_labels,  
         color=node_colors
     ),
     link=dict(
@@ -70,7 +71,7 @@ fig = go.Figure(go.Sankey(
 
 fig.update_layout(
     title_text="Sankey Diagram",
-    font_size=12
+    font_size=18
 )
 
 fig.show()
