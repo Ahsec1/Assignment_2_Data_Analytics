@@ -35,8 +35,10 @@ node_colors = {
     'AUT': 'yellow', 'BEL': 'yellow', 'BGR': 'yellow', 'HRV': 'yellow', 'CZE': 'yellow', 'EST': 'yellow', 'FRA': 'yellow', 'DEU': 'yellow', 'GRC': 'yellow', 'HUN': 'yellow', 'IRL': 'yellow', 'ITA': 'yellow', 'LVA': 'yellow', 'LUX': 'yellow', 'NLD': 'yellow', 'PRT': 'yellow', 'ROU': 'yellow', 'SVK': 'yellow', 'SVN': 'yellow', 'ESP': 'yellow'
 }
 
+edge_colors = [node_colors[v] for (u, v) in G.edges()]
+nx.draw_networkx_edges(G, pos, edge_color=edge_colors, width=2.0, alpha=1.0)
+
 nx.draw_networkx_nodes(G, pos, node_size=700, node_color=[node_colors[node] for node in G.nodes])
-nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.5)
 nx.draw_networkx_labels(G, pos, font_size=12)
 
 plt.title("Network Graph")
