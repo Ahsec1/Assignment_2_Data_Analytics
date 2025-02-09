@@ -3,12 +3,11 @@ import pandas as pd
 
 df = pd.read_csv("C:/Users/USER/Documents/3rd year 2nd sem/Data Analytics/Assignment_2_Data_Analytics/data/sankey_assignment.csv")
 
-left_labels = df.columns[1:8]  
-right_labels = df.columns[8:]  
-middle_labels = df["LABEL"].tolist()  
+left_labels = df.columns[1:9]  
+right_labels = df.columns[9:]  
+middle_labels = df["LABEL"].tolist()
 
 labels = list(left_labels) + middle_labels + list(right_labels)
-
 label_to_index = {label: i for i, label in enumerate(labels)}
 
 sources = []
@@ -32,22 +31,45 @@ for _, row in df.iterrows():
             targets.append(label_to_index[right])
             values.append(flow_value)
 
+colors = {
+    "OMP": "#20b2aa",
+    "PS": "#ffa07a",
+    "CNP": "#ff8c00",
+    "RGS": "#ba55d3",
+    "NRP": "#ff6ab4",
+    "NCDM": "#ffd701",
+    "NMCCC": "#8fbc8f",
+    "PEC": "#02ced1",
+    "S": "#87cefa",
+    "I": "#00bfff",
+    "D": "#5f9ea0",
+    "F": "#4782b4",
+    "N": "#6395ed",
+    "Aca": "#97fb98",
+    "Reg": "#3cb371",
+    "Oth": "#90ee8f"
+}
+
+node_colors = [colors[label] for label in labels]
+
 fig = go.Figure(go.Sankey(
     node=dict(
         pad=20,
         thickness=20,
         line=dict(color="black", width=0.5),
-        label=labels
+        label=labels,
+        color=node_colors
     ),
     link=dict(
         source=sources,
         target=targets,
-        value=values
+        value=values,
+        color=[node_colors[src] for src in sources]  
     )
 ))
 
 fig.update_layout(
-    title_text="Sankey Diagram: Sources → Middle Set → Targets",
+    title_text="Sankey Diagram",
     font_size=12
 )
 
